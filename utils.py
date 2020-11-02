@@ -63,7 +63,7 @@ class get_data():
         self.pny_lst = []
         self.han_lst = []
         for file in read_files:
-            print('load ', file, ' data...')
+            print('load ', file, ' data...length ', self.data_length)
             sub_file = 'data/' + file
             with open(sub_file, 'r', encoding='utf8') as f:
                 data = f.readlines()
@@ -76,12 +76,14 @@ class get_data():
             self.wav_lst = self.wav_lst[:self.data_length]
             self.pny_lst = self.pny_lst[:self.data_length]
             self.han_lst = self.han_lst[:self.data_length]
+            print('wav ',self.wav_lst[0], '\npny ',self.pny_lst[0], '\nhan ', self.han_lst[0])
         print('make am vocab...')
         self.am_vocab = self.mk_am_vocab(self.pny_lst)
         print('make lm pinyin vocab...')
         self.pny_vocab = self.mk_lm_pny_vocab(self.pny_lst)
         print('make lm hanzi vocab...')
         self.han_vocab = self.mk_lm_han_vocab(self.han_lst)
+        print('am vocab ',self.am_vocab[0:2], '\npny vocab',self.pny_vocab[0:2], '\nhan vocab', self.han_vocab[0:2])
 
     def get_am_batch(self):
         shuffle_list = [i for i in range(len(self.wav_lst))]
