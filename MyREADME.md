@@ -1,10 +1,10 @@
 
-pip uninstall gast
-pip install gast==0.2.2
+sudo docker run -itd --gpus all --name tf1 -v /opt/Works.Linux:/Works -v /opt/download:/Downloads tensorflow/tensorflow:1.7.0-gpu-py3 bash
 
+export LANG="C.UTF-8"
+pip install scipy tqdm python_speech_features
+pip install keras==2.1.0
 
-/home/buck/anaconda3/envs/ai/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+ln -s /Downloads/data/THCHS-30/data_thchs30 data/data_thchs30
 
-pip uninstall numpy
-pip install numpy==1.16
 
