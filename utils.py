@@ -19,7 +19,7 @@ def data_hparams():
         prime=True,
         stcmd=True,
         batch_size=1,
-        data_length=10,
+        data_length=100,
         shuffle=True)
     return params
 
@@ -77,12 +77,11 @@ class get_data():
             self.pny_lst = self.pny_lst[:self.data_length]
             self.han_lst = self.han_lst[:self.data_length]
         print('make am vocab...')
-        self.am_vocab = self.mk_am_vocab(self.pny_lst)
+        self.am_vocab = self.mk_am_vocab(self.pny_lst)  #去重合并N组拼音序列
         print('make lm pinyin vocab...')
-        self.pny_vocab = self.mk_lm_pny_vocab(self.pny_lst)
+        self.pny_vocab = self.mk_lm_pny_vocab(self.pny_lst)  #去重合并N组拼音序列
         print('make lm hanzi vocab...')
-        self.han_vocab = self.mk_lm_han_vocab(self.han_lst)
-        print('am vocab ',self.am_vocab[0:2], '\npny vocab',self.pny_vocab[0:2], '\nhan vocab', self.han_vocab[0:2])
+        self.han_vocab = self.mk_lm_han_vocab(self.han_lst)  #去重合并N组汉字序列
 
     def get_am_batch(self):
         shuffle_list = [i for i in range(len(self.wav_lst))]

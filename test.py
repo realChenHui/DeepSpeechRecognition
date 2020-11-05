@@ -59,8 +59,8 @@ for i in range(10):
     # 将数字结果转化为文本结果
     _, text = decode_ctc(result, train_data.am_vocab)
     text = ' '.join(text)
-    print('原文拼音结果：', ' '.join(y))
-    print('识别拼音结果：', text)
+    print('原文拼音序列：', ' '.join(y))
+    print('识别拼音序列：', text)
     with sess.as_default():
         text = text.strip('\n').split(' ')
         x = np.array([train_data.pny_vocab.index(pny) for pny in text])
@@ -68,8 +68,8 @@ for i in range(10):
         preds = sess.run(lm.preds, {lm.x: x})  #预测2：语言模型
         label = test_data.han_lst[i]
         got = ''.join(train_data.han_vocab[idx] for idx in preds[0])
-        print('原文汉字结果：', label)
-        print('识别汉字结果：', got)
+        print('原文汉字序列：', label)
+        print('识别汉字序列：', got)
 
         word_error_num += min(len(label), GetEditDistance(label, got))
         word_num += len(label)

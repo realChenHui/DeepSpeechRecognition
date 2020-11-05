@@ -12,6 +12,8 @@
 
 sudo docker run -itd --gpus all --name tf1 -v /opt/Works.Linux:/Works -v /opt/download:/Downloads tensorflow/tensorflow:1.7.0-gpu-py3 bash
 
+sudo exec -it tf1 bash
+
 export LANG="C.UTF-8"
 
 pip install scipy tqdm python_speech_features
