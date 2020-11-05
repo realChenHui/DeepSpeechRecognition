@@ -76,7 +76,6 @@ class get_data():
             self.wav_lst = self.wav_lst[:self.data_length]
             self.pny_lst = self.pny_lst[:self.data_length]
             self.han_lst = self.han_lst[:self.data_length]
-            print('wav ',self.wav_lst[0], '\npny ',self.pny_lst[0], '\nhan ', self.han_lst[0])
         print('make am vocab...')
         self.am_vocab = self.mk_am_vocab(self.pny_lst)
         print('make lm pinyin vocab...')

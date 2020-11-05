@@ -9,7 +9,7 @@ from utils import decode_ctc, GetEditDistance
 # 0.准备解码所需字典，参数需和训练一致，也可以将字典保存到本地，直接进行读取
 from utils import get_data, data_hparams
 data_args = data_hparams()
-train_data = get_data(data_args)
+train_data = get_data(data_args)  #用于加载am lm
 
 
 # 1.声学模型-----------------------------------
@@ -50,27 +50,28 @@ am_batch = test_data.get_am_batch()
 word_num = 0
 word_error_num = 0
 for i in range(10):
-    print('\n the ', i, 'th example.')
-    # 载入训练好的模型，并进行识别
+    print('\n the ', i, 'th example. wav ', test_data.wav_lst[i])
     inputs, _ = next(am_batch)
     x = inputs['the_inputs']
     y = test_data.pny_lst[i]
-    result = am.model.predict(x, steps=1)
+    # 使用已载入的训练好的模型，并进行识别
+    result = am.model.predict(x, steps=1) #预测1：语音模型 
     # 将数字结果转化为文本结果
     _, text = decode_ctc(result, train_data.am_vocab)
     text = ' '.join(text)
-    print('文本结果：', text)
-    print('原文结果：', ' '.join(y))
+    print('原文拼音结果：', ' '.join(y))
+    print('识别拼音结果：', text)
     with sess.as_default():
         text = text.strip('\n').split(' ')
         x = np.array([train_data.pny_vocab.index(pny) for pny in text])
         x = x.reshape(1, -1)
-        preds = sess.run(lm.preds, {lm.x: x})
+        preds = sess.run(lm.preds, {lm.x: x})  #预测2：语言模型
         label = test_data.han_lst[i]
         got = ''.join(train_data.han_vocab[idx] for idx in preds[0])
-        print('原文汉字：', label)
-        print('识别结果：', got)
+        print('原文汉字结果：', label)
+        print('识别汉字结果：', got)
+
         word_error_num += min(len(label), GetEditDistance(label, got))
         word_num += len(label)
-print('词错误率：', word_error_num / word_num)
 sess.close()
+print('词错误率：', word_error_num / word_num)

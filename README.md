@@ -8,6 +8,17 @@
 ## 注意：本人于近期想对该项目进行翻新，tf现在已经将keras作为重要的一部分，因此可能将代码用TensorFlow2来进行修改。大家有什么建议可以在issue提一下。
 ## Note: I want to refurbish the project in the near future. tf now has keras as an important part, so the code may be modified with TensorFlow2. Any suggestions for everyone can be mentioned in the issue.
 
+## 0. Installation
+
+sudo docker run -itd --gpus all --name tf1 -v /opt/Works.Linux:/Works -v /opt/download:/Downloads tensorflow/tensorflow:1.7.0-gpu-py3 bash
+
+export LANG="C.UTF-8"
+pip install scipy tqdm python_speech_features
+pip install keras==2.1.0
+
+ln -s /Downloads/data/THCHS-30/data_thchs30 data/data_thchs30
+
+
 ## 1. Introduction
 该系统实现了基于深度框架的语音识别中的声学模型和语言模型建模，其中声学模型包括CNN-CTC、GRU-CTC、CNN-RNN-CTC，语言模型包含[transformer](https://jalammar.github.io/illustrated-transformer/)、[CBHG](https://github.com/crownpku/Somiao-Pinyin)，数据集包含stc、primewords、Aishell、thchs30四个数据集。
 
