@@ -9,6 +9,7 @@ from utils import decode_ctc, GetEditDistance
 # 0.准备解码所需字典，参数需和训练一致，也可以将字典保存到本地，直接进行读取
 from utils import get_data, data_hparams
 data_args = data_hparams()
+print("show me data_args", data_args)
 train_data = get_data(data_args)  #用于加载am lm
 
 
@@ -17,9 +18,12 @@ from model_speech.cnn_ctc import Am, am_hparams
 
 am_args = am_hparams()
 am_args.vocab_size = len(train_data.am_vocab)
+print("show me am_args", am_args)
 am = Am(am_args)
 print('loading acoustic model...')
 am.ctc_model.load_weights('logs_am/model.h5')
+print("DYING....")
+exit(0)
 
 # 2.语言模型-------------------------------------------
 from model_language.transformer import Lm, lm_hparams
@@ -29,6 +33,7 @@ lm_args.input_vocab_size = len(train_data.pny_vocab)
 lm_args.label_vocab_size = len(train_data.han_vocab)
 lm_args.dropout_rate = 0.
 print('loading language model...')
+print("show me lm_args", lm_args)
 lm = Lm(lm_args)
 sess = tf.Session(graph=lm.graph)
 with lm.graph.as_default():

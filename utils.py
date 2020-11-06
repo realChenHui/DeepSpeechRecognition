@@ -19,7 +19,7 @@ def data_hparams():
         prime=True,
         stcmd=True,
         batch_size=1,
-        data_length=100,
+        data_length=10,
         shuffle=True)
     return params
 
