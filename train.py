@@ -7,7 +7,7 @@ from keras.callbacks import ModelCheckpoint
 # 0.准备训练所需数据------------------------------
 data_args = data_hparams()
 data_args.data_type = 'train'
-data_args.data_path = '../dataset/'
+data_args.data_path = './data/'
 data_args.thchs30 = True
 data_args.aishell = True
 data_args.prime = True
@@ -21,7 +21,7 @@ train_data = get_data(data_args)
 # 0.准备验证所需数据------------------------------
 data_args = data_hparams()
 data_args.data_type = 'dev'
-data_args.data_path = '../dataset/'
+data_args.data_path = './data/'
 data_args.thchs30 = True
 data_args.aishell = True
 data_args.prime = False
@@ -49,7 +49,8 @@ epochs = 10
 batch_num = len(train_data.wav_lst) // train_data.batch_size
 
 # checkpoint
-ckpt = "model_{epoch:02d}-{val_acc:.2f}.hdf5"
+#ckpt = "model_{epoch:02d}-{val_acc:.2f}.hdf5"
+ckpt = "model_{epoch:02d}.hdf5"
 checkpoint = ModelCheckpoint(os.path.join('./checkpoint', ckpt), monitor='val_loss', save_weights_only=False, verbose=1, save_best_only=True)
 
 #

@@ -22,8 +22,8 @@ print("show me am_args", am_args)
 am = Am(am_args)
 print('loading acoustic model...')
 am.ctc_model.load_weights('logs_am/model.h5')
-print("DYING....")
-exit(0)
+#print("DYING....")
+#exit(0)
 
 # 2.语言模型-------------------------------------------
 from model_language.transformer import Lm, lm_hparams
