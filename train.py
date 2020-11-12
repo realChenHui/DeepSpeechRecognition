@@ -47,11 +47,12 @@ if os.path.exists('logs_am/model.h5'):
 
 epochs = 10
 batch_num = len(train_data.wav_lst) // train_data.batch_size
+print('acoustic model training batch num ', batch_num)
 
 # checkpoint
 #ckpt = "model_{epoch:02d}-{val_acc:.2f}.hdf5"
-ckpt = "model_{epoch:02d}.hdf5"
-checkpoint = ModelCheckpoint(os.path.join('./checkpoint', ckpt), monitor='val_loss', save_weights_only=False, verbose=1, save_best_only=True)
+ckpt = "model_{epoch:02d}-{val_loss:.2f}.hdf5"
+checkpoint = ModelCheckpoint(os.path.join('./logs_am/checkpoint', ckpt), monitor='val_loss', save_weights_only=False, verbose=1, save_best_only=True)
 
 #
 # for k in range(epochs):
@@ -63,7 +64,9 @@ checkpoint = ModelCheckpoint(os.path.join('./checkpoint', ckpt), monitor='val_lo
 batch = train_data.get_am_batch()
 dev_batch = dev_data.get_am_batch()
 
-am.ctc_model.fit_generator(batch, steps_per_epoch=batch_num, epochs=10, callbacks=[checkpoint], workers=1, use_multiprocessing=False, validation_data=dev_batch, validation_steps=200)
+am.ctc_model.fit_generator(batch, steps_per_epoch=batch_num, epochs=10, 
+        callbacks=[checkpoint], workers=1, use_multiprocessing=False, 
+        validation_data=dev_batch, validation_steps=200)
 am.ctc_model.save_weights('logs_am/model.h5')
 
 
