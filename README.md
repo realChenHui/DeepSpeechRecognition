@@ -22,5 +22,5 @@ mkdir checkpoint
 
 # 相关内容
 
-[1](https://github.com/audier/DeepSpeechRecognition)
+[1]:https://github.com/audier/DeepSpeechRecognition
 
