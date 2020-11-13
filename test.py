@@ -3,11 +3,19 @@ import os
 import difflib
 import tensorflow as tf
 import numpy as np
+import configparser
 from utils import decode_ctc, GetEditDistance
 
 
+#config = configparser.ConfigParser()
+#config.read('conf/main.ini')
+#
+#for key in config.sections():
+#    print(key)
+
+
 # 0.准备解码所需字典，参数需和训练一致，也可以将字典保存到本地，直接进行读取
-from utils import get_data, data_hparams
+from data import get_data, data_hparams
 data_args = data_hparams()
 print("show me data_args", data_args)
 train_data = get_data(data_args)  #用于加载am lm
@@ -22,8 +30,6 @@ print("show me am_args", am_args)
 am = Am(am_args)
 print('loading acoustic model...')
 am.ctc_model.load_weights('logs_am/model.h5')
-#print("DYING....")
-#exit(0)
 
 # 2.语言模型-------------------------------------------
 from model_language.transformer import Lm, lm_hparams
@@ -55,7 +61,7 @@ am_batch = test_data.get_am_batch()
 word_num = 0
 word_error_num = 0
 for i in range(10):
-    print('\n the ', i, 'th example. wav ', test_data.wav_lst[i])
+    print('\n the ', i, 'th example.wav ', test_data.wav_lst[i])
     inputs, _ = next(am_batch)
     x = inputs['the_inputs']
     y = test_data.pny_lst[i]

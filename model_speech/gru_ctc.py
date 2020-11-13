@@ -10,9 +10,9 @@ from keras.utils import multi_gpu_model
 import tensorflow as tf
 
 
-
 def am_hparams():
     params = tf.contrib.training.HParams(
+        epochs = 10,
         # vocab
         vocab_size = 50,
         lr = 0.0008,
