@@ -6,29 +6,23 @@ from keras.callbacks import ModelCheckpoint
 
 # 0.准备训练所需数据------------------------------
 data_args = data_hparams()
+data_args.data_set = 'thchs30'
 data_args.data_type = 'train'
 data_args.data_path = './data/'
-data_args.thchs30 = True
-data_args.aishell = True
-data_args.prime = True
-data_args.stcmd = True
 data_args.batch_size = 4
-data_args.data_length = 10
+data_args.data_length = 10000
 # data_args.data_length = None
 data_args.shuffle = True
 train_data = get_data(data_args)
 
 # 0.准备验证所需数据------------------------------
 data_args = data_hparams()
+data_args.data_set = 'thchs30'
 data_args.data_type = 'dev'
 data_args.data_path = './data/'
-data_args.thchs30 = True
-data_args.aishell = True
-data_args.prime = False
-data_args.stcmd = False
 data_args.batch_size = 4
 # data_args.data_length = None
-data_args.data_length = 10
+data_args.data_length = 893
 data_args.shuffle = True
 dev_data = get_data(data_args)
 
@@ -103,4 +97,5 @@ with tf.Session(graph=lm.graph) as sess:
                 writer.add_summary(rs, k * batch_num + i)
         print('epochs', k+1, ': average loss = ', total_loss/batch_num)
     saver.save(sess, 'logs_lm/model_%d' % (lm_args.epochs + add_num))
+    saver.save(sess, 'logs_lm/model')
     writer.close()

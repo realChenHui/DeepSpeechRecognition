@@ -41,7 +41,7 @@ def compute_fbank(file):
 
 
 # word error rate------------------------------------
-def GetEditDistance(str1, str2):
+def get_edit_distance(str1, str2):
 	leven_cost = 0
 	s = difflib.SequenceMatcher(None, str1, str2)
 	for tag, i1, i2, j1, j2 in s.get_opcodes():

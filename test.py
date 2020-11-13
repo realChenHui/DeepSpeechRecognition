@@ -4,7 +4,7 @@ import difflib
 import tensorflow as tf
 import numpy as np
 import configparser
-from utils import decode_ctc, GetEditDistance
+from utils import decode_ctc, get_edit_distance
 
 
 #config = configparser.ConfigParser()
@@ -51,8 +51,9 @@ with sess.as_default():
 # 3. 准备测试所需数据， 不必和训练数据一致，通过设置data_args.data_type测试，
 #    此处应设为'test'，我用了'train'因为演示模型较小，如果使用'test'看不出效果，
 #    且会出现未出现的词。
-data_args.data_type = 'train'
+data_args.data_type = 'test'
 data_args.shuffle = False
+data_args.data_length = 10 
 data_args.batch_size = 1
 test_data = get_data(data_args)
 
@@ -60,7 +61,7 @@ test_data = get_data(data_args)
 am_batch = test_data.get_am_batch()
 word_num = 0
 word_error_num = 0
-for i in range(10):
+for i in range(test_data.data_length):
     print('\n the ', i, 'th example.wav ', test_data.wav_lst[i])
     inputs, _ = next(am_batch)
     x = inputs['the_inputs']
@@ -82,7 +83,7 @@ for i in range(10):
         print('原文汉字序列：', label)
         print('识别汉字序列：', got)
 
-        word_error_num += min(len(label), GetEditDistance(label, got))
+        word_error_num += min(len(label), get_edit_distance(label, got))
         word_num += len(label)
 sess.close()
 print('词错误率：', word_error_num / word_num)
